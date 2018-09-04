@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: angular_nginx
+    restart: always
+    ports:
+      - '3882:3882'
+      

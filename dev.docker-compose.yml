@@ -1,0 +1,21 @@
+version: '3.6'
+volumes:
+  node-modules:
+    driver: local
+services:
+  app:
+    build: 
+      context: ./app
+      dockerfile: dev.Dockerfile
+    environment:
+      - NODE_ENV=development
+    command: 'npm start'
+    ports:
+      - '4200:4200' 
+      - '49153:49153'
+    expose:
+      - '4200'
+      - '49153'
+    volumes:
+      - node-modules:/usr/app/node_modules
+      - ./app/:/usr/app/
