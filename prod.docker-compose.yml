@@ -3,8 +3,8 @@ version: '3.6'
 services:
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: ./app
+      dockerfile: prod.Dockerfile
     container_name: angular_nginx
     restart: always
     ports:

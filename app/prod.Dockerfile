@@ -1,5 +1,6 @@
+# Build stage
 # Installs the current application on a Node Image.
-FROM node:8.11
+FROM node:8.11 as build-stage
 # The qq is for silent output in the console
 # You are welcome to modify this part as it
 RUN apt-get update && apt-get install -y build-essential libpq-dev vim
@@ -23,4 +24,13 @@ RUN yarn install
 # Remove old file
 # RUN rm -r dist
 
-RUN npm run build 
+RUN yarn run build 
+
+# Deploy stage
+FROM nginx:1.13.12-alpine as production-stage
+
+# Copy the build production directory from build-stage into nginx/vuejs_nginx
+COPY --from=build-stage /usr/app/dist /usr/share/nginx/angular_nginx
+
+# Copy the nginx config file into nginx system
+COPY ./angular_nginx.conf /etc/nginx/conf.d
